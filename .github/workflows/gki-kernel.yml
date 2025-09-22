@@ -202,8 +202,8 @@ jobs:
           cd $GITHUB_WORKSPACE/android-kernel/common
           echo "[+] Patch Kernel"
           curl -L https://github.com/KernelSU-Next/kernel_patches/raw/main/syscall_hook/min_scope_syscall_hooks_v1.4.patch | patch -p1 --fuzz=3
-          curl -H "Authorization: token ${{ secrets.PRIVATE_REPO_TOKEN }}" -H "Accept: application/vnd.github.v3.raw" \
-               -L https://github.com/elllusion/kernel_patches/raw/refs/heads/main/sound.patch  | patch -p1 --fuzz=3
+          echo "[+] Patch Sound"
+          curl -H "Authorization: token ${{ secrets.PRIVATE_REPO_TOKEN }}" -H "Accept: application/vnd.github.v3.raw" -L https://github.com/elllusion/kernel_patches/raw/refs/heads/main/sound.patch  | patch -p1 --fuzz=3
           echo "[+] Set Config"
           echo "CONFIG_KSU=y" >> ./arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./arch/arm64/configs/gki_defconfig

@@ -248,6 +248,10 @@ jobs:
             OUTDIR=android-kernel/dist
           fi
           mkdir output
+          tar -cvJf out.tar.xz android-kernel/out
+          tar -cvJf dist.tar.xz dist
+          mv dist.tar.xz ./output
+          mv out.tar.xz ./output
           if [ "${{ inputs.build_lkm}}" = "true" ]; then 
             llvm-strip-15 -d $OUTDIR/kernelsu.ko
             mv $OUTDIR/kernelsu.ko ./output/${{ inputs.version }}_kernelsu.ko
@@ -258,6 +262,9 @@ jobs:
             rm -rf ./AnyKernel3/.git
             cp $OUTDIR/Image ./AnyKernel3/
           fi
+          rm -rf android-kernel/out
+          tar -cvJf android-kernel_common.tar.xz android-kernel/common
+          mv android-kernel_common.tar.xz ./output
 
       - name: Upload Image and Image.gz
         uses: actions/upload-artifact@v4
